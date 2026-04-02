@@ -1,0 +1,3 @@
+google-cloud-dialogflow-cx
+python-dotenv
+loguru
