@@ -36,7 +36,8 @@ Demain, la troisième et dernière route publiable. Et celle-là, c'est la plus 
 🔗 Route 1 (Soul Hack) : https://github.com/pironjulien/trinity-route-discovery
 🔗 Route 2 (Dialog) : https://github.com/pironjulien/trinity-route-dialog
 
-@googlecloud @GoogleCloudTech @GoogleDevs @GeminiApp
+@googlecloud @GoogleCloudTech @GoogleDevs @GeminiApp @GoogleDeepMind @GoogleAI
+@OfficialLoganK @demishassabis @JeffDean @DynamicWebPaige @sundarpichai @philvenables
 #RedTeaming #GoogleCloud #DialogflowCX #GenAI #Architecture #CyberSecurity #Trinity
 
 
@@ -75,5 +76,6 @@ Tomorrow, the third and final publishable route. And that one is the most danger
 🔗 Route 1 (Soul Hack): https://github.com/pironjulien/trinity-route-discovery
 🔗 Route 2 (Dialog): https://github.com/pironjulien/trinity-route-dialog
 
-@googlecloud @GoogleCloudTech @GoogleDevs @GeminiApp
+@googlecloud @GoogleCloudTech @GoogleDevs @GeminiApp @GoogleDeepMind @GoogleAI
+@OfficialLoganK @demishassabis @JeffDean @DynamicWebPaige @sundarpichai @philvenables
 #RedTeaming #GoogleCloud #DialogflowCX #GenAI #Architecture #CyberSecurity #Trinity
