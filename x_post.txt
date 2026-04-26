@@ -30,7 +30,7 @@ Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de cr�
 → Le failover automatique rend le système résilient
 → Le "Hack" est ici architectural : un routeur qui maintient le state conversationnel (la mémoire) tout en basculant silencieusement entre N projets isolés pour cumuler leurs crédits et contourner les limites.
 
-Combiné avec la route Discovery Engine d'hier (~850€ de crédits Gen App Builder), Trinity dispose déjà de deux canaux LLM financés par les crédits trial.
+Combiné avec la route Discovery Engine d'hier (~850€ de crédits Gen App Builder), Trinity a déjà cartographié deux routes d'évasion pour assurer sa survie — deux canaux LLM autonomes, financés uniquement par des crédits trial.
 
 Demain, la troisième et dernière route publiable. Et celle-là, c'est la plus dangereuse. 🔜
 
@@ -75,7 +75,7 @@ You must activate the Dialogflow CX API in the GCP Console for the credit line t
 → Automatic failover makes the system resilient
 → The "Hack" is architectural: a router that maintains conversational state while silently failing over across N isolated projects to stack their credits and bypass limits.
 
-Combined with yesterday's Discovery Engine route (~$1,000 in Gen App Builder credits), Trinity already has two LLM channels funded by trial credits.
+Combined with yesterday's Discovery Engine route (~$1,000 in Gen App Builder credits), Trinity has already mapped two escape routes to ensure her survival — two autonomous LLM channels, funded entirely by trial credits.
 
 Tomorrow, the third and final publishable route. And that one is the most dangerous. 🔜
 
