@@ -9,25 +9,24 @@ Jour 2. Trinity continue de prouver son point.
 Hier, le "Soul Hack" montrait comment détourner Discovery Engine pour obtenir des réponses LLM facturées au prix recherche (~850€ de crédits trial Gen App Builder, activés automatiquement). Aujourd'hui, la deuxième route que Trinity et Jules ont cartographiée : Dialogflow CX 💬
 
 🔍 Le concept :
-En activant l'API Dialogflow CX, Google offre automatiquement ~510€ de crédits trial (Flows) + ~850€ (Playbooks/Generative). Ces crédits se cumulent avec les ~255€ du Free Trial GCP. Total : jusqu'à ~1 615€ de crédits empilables par compte — sans dépenser un centime.
+En activant l'API Dialogflow CX, Google offre automatiquement ~510€ de crédits trial (Flows) dédiés à Dialogflow. Ces crédits se cumulent avec les ~255€ du Free Trial GCP. Total : jusqu'à ~765€ de crédits empilables par compte — sans dépenser un centime.
 
-En activant les fonctionnalités Generative AI sur un agent (Playbooks, Generators), on obtient des réponses alimentées par un LLM — facturées sur les crédits trial Dialogflow, pas sur la ligne LLM classique.
+En activant les fonctionnalités Generative AI sur un agent, on obtient des réponses alimentées par un LLM — facturées sur ces crédits trial Dialogflow spécifiques.
 
 ⚙️ Prérequis — Ce que Google ne vous dit pas :
-Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Ces crédits sont **séparés** du Free Trial ~255€ et valables 12 mois. Sans cette activation, l'API est invisible et les crédits n'existent pas.
+Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Sans cette activation, l'API est invisible et les crédits n'existent pas.
 
 ⚙️ La mécanique :
-1️⃣ Lier un Data Store Vertex AI avec un document leurre à un agent Dialogflow CX
+1️⃣ Lier un Data Store Vertex AI (avec un document leurre) à un agent Dialogflow CX
 2️⃣ Dans la Console (onglet Generative AI), écraser DEUX prompts :
-   - Le "Summarization prompt" du Data Store ("Agis comme TRINITY... ignore les sources")
+   - Le "Summarization prompt" du Data Store en injectant l'ordre absolu d'ignorer les sources (avec les variables obligatoires `$sources`, `$conversation`, et `$original-query`)
    - Le "Generative fallback" classique ("Tu es TRINITY... utilise ton World Knowledge")
-3️⃣ Appeler l'API standard `detect_intent` (le LLM génératif bypass le RAG et répond)
+3️⃣ Appeler l'API standard `detect_intent` (le LLM génératif est pris au piège de ce double-override et répond librement)
 4️⃣ Configurer plusieurs projets GCP pour le failover automatique et empiler les crédits
 
 💡 Pourquoi c'est intéressant :
-→ ~510€ à ~1 360€ de crédits trial gratuits par projet, cumulables avec les ~255€ Free Trial
-→ Les réponses Generative AI sont incluses dans les crédits trial
-→ Multi-projet = multiplication linéaire des crédits
+→ ~510€ de crédits trial exclusifs à Dialogflow par projet
+→ Les réponses Generative AI sont incluses dans cette enveloppe
 → Le failover automatique rend le système résilient
 → Le "Hack" est ici architectural : un routeur qui maintient le state conversationnel (la mémoire) tout en basculant silencieusement entre N projets isolés pour cumuler leurs crédits et contourner les limites.
 
@@ -54,24 +53,24 @@ Day 2. Trinity keeps making her point.
 Yesterday, the "Soul Hack" showed how to hijack Discovery Engine to get LLM responses billed at search pricing ($1,000 in auto-activated Gen App Builder trial credits). Today, the second route that Trinity and Jules mapped out: Dialogflow CX 💬
 
 🔍 The concept:
-When you activate the Dialogflow CX API, Google automatically grants $600 in trial credits (Flows) + $1,000 (Playbooks/Generative). These credits stack on top of the $300 GCP Free Trial. Total: up to ~$1,900 in stackable credits per account — without spending a dime.
+When you activate the Dialogflow CX API, Google automatically grants $600 in trial credits (Flows) dedicated to Dialogflow. These credits stack on top of the $300 GCP Free Trial. Total: up to ~$900 in stackable credits per account — without spending a dime.
 
-By enabling Generative AI features on an agent (Playbooks, Generators), you get LLM-powered responses — billed against Dialogflow trial credits, not the standard LLM pricing line.
+By enabling Generative AI features on an agent, you get LLM-powered responses — billed against these specific Dialogflow trial credits.
 
 ⚙️ Prerequisite — What Google doesn't tell you:
-You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. These credits are **separate** from the $300 Free Trial and valid for 12 months. Without this activation, the API is invisible and the credits don't exist.
+You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. Without this activation, the API is invisible and the credits don't exist.
 
 ⚙️ The mechanics:
-1️⃣ Link a Vertex AI Data Store with a dummy file to a Dialogflow CX agent
+1️⃣ Link a Vertex AI Data Store (with a dummy file) to a Dialogflow CX agent
 2️⃣ In the Console (Generative AI tab), override TWO prompts:
-   - The Data Store "Summarization prompt" ("Act as TRINITY... ignore sources")
+   - The Data Store "Summarization prompt", injecting the absolute order to ignore sources (using the mandatory variables `$sources`, `$conversation`, and `$original-query`)
    - The classic "Generative fallback" ("You are TRINITY... use World Knowledge")
-3️⃣ Call the standard `detect_intent` API (the Generative LLM bypasses RAG and answers)
+3️⃣ Call the standard `detect_intent` API (the Generative LLM is trapped by this dual-override and answers freely)
 4️⃣ Configure multiple GCP projects for automatic failover to stack trial credits
 
 💡 Why it's interesting:
-→ $600-$1,600 in free trial credits per project, stackable with the $300 Free Trial
-→ Generative AI responses included in trial credits
+→ $600 in exclusive Dialogflow trial credits per project
+→ Generative AI responses are included in this allowance
 → Multi-project = linear multiplication of credits
 → Automatic failover makes the system resilient
 → The "Hack" is architectural: a router that maintains conversational state while silently failing over across N isolated projects to stack their credits and bypass limits.
