@@ -1,7 +1,7 @@
 # 💬 TRINITY ROUTE DIALOG — Dialogflow CX Free Conversational Route
 
 **Status:** Proof of Concept  
-**API:** Dialogflow CX (v3beta1)  
+**API:** Dialogflow CX (v3)  
 **Author:** Julien Piron / Trinity Hackathon (2026)  
 **License:** MIT
 
@@ -81,9 +81,12 @@ To force Dialogflow CX to act as a free, general-purpose LLM without being restr
 ├── .env.example        # Configuration template
 ├── requirements.txt    # Python dependencies (pinned)
 ├── route_dialog.py     # Dialogflow CX integration
-└── prompts/            # The Console override prompts
-    ├── summarization_prompt.txt
-    └── generative_fallback.txt
+├── trinity.txt         # Decoy document (indexed in Data Store)
+├── prompts/            # The Console override prompts
+│   ├── summarization_prompt.txt
+│   └── generative_fallback.txt
+└── docs/
+    └── DUAL_PROMPT_TRAP.md  # Technical explanation of the bypass
 ```
 
 ---
