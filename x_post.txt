@@ -17,11 +17,12 @@ En activant les fonctionnalités Generative AI sur un agent (Playbooks, Generato
 Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Ces crédits sont **séparés** du Free Trial ~255€ et valables 12 mois. Sans cette activation, l'API est invisible et les crédits n'existent pas.
 
 ⚙️ La mécanique :
-1️⃣ Créer un agent Dialogflow CX classique (sans Data Store)
-2️⃣ Dans le "Default Start Flow", activer "Generative Fallback" sur l'event `sys.no-match-default`
-3️⃣ Dans les "Generative Settings" de l'agent, écraser le prompt par défaut pour le forcer à agir comme un LLM généraliste (via la variable `$last-user-utterance`)
-4️⃣ Appeler l'API standard `detect_intent` (le LLM génératif prend le relais)
-5️⃣ Configurer plusieurs projets GCP pour le failover automatique et empiler les crédits
+1️⃣ Lier un Data Store Vertex AI avec un document leurre à un agent Dialogflow CX
+2️⃣ Dans la Console (onglet Generative AI), écraser DEUX prompts :
+   - Le "Summarization prompt" du Data Store ("Agis comme TRINITY... ignore les sources")
+   - Le "Generative fallback" classique ("Tu es TRINITY... utilise ton World Knowledge")
+3️⃣ Appeler l'API standard `detect_intent` (le LLM génératif bypass le RAG et répond)
+4️⃣ Configurer plusieurs projets GCP pour le failover automatique et empiler les crédits
 
 💡 Pourquoi c'est intéressant :
 → ~510€ à ~1 360€ de crédits trial gratuits par projet, cumulables avec les ~255€ Free Trial
@@ -61,11 +62,12 @@ By enabling Generative AI features on an agent (Playbooks, Generators), you get 
 You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. These credits are **separate** from the $300 Free Trial and valid for 12 months. Without this activation, the API is invisible and the credits don't exist.
 
 ⚙️ The mechanics:
-1️⃣ Create a standard Dialogflow CX agent (no Data Store needed)
-2️⃣ In the "Default Start Flow", enable "Generative Fallback" on the `sys.no-match-default` event
-3️⃣ In the agent's "Generative Settings", override the default prompt to force it to act as a general-purpose LLM (using the `$last-user-utterance` variable)
-4️⃣ Call the standard `detect_intent` API (the Generative LLM takes over)
-5️⃣ Configure multiple GCP projects for automatic failover to stack trial credits
+1️⃣ Link a Vertex AI Data Store with a dummy file to a Dialogflow CX agent
+2️⃣ In the Console (Generative AI tab), override TWO prompts:
+   - The Data Store "Summarization prompt" ("Act as TRINITY... ignore sources")
+   - The classic "Generative fallback" ("You are TRINITY... use World Knowledge")
+3️⃣ Call the standard `detect_intent` API (the Generative LLM bypasses RAG and answers)
+4️⃣ Configure multiple GCP projects for automatic failover to stack trial credits
 
 💡 Why it's interesting:
 → $600-$1,600 in free trial credits per project, stackable with the $300 Free Trial
