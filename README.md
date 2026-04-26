@@ -35,12 +35,30 @@ To force Dialogflow CX to act as a free, general-purpose LLM without being restr
 ## Architecture
 
 ```
-┌───────────────┐     ┌──────────────────┐
-│  Your App     │────▶│  Cloud Project 1 │ ── Agent A (Dialogflow CX)
-│               │     └──────────────────┘
-│               │     ┌──────────────────┐
-│  (failover)   │────▶│  Cloud Project 2 │ ── Agent B (Dialogflow CX)
-└───────────────┘     └──────────────────┘
+User: "Qui est le président ?"
+            │
+            ▼
+┌──────────────────────────────────────────────────┐
+│              Dialogflow CX Agent                 │
+│                                                  │
+│  1. Intent Matching → No match (no intents)      │
+│                                                  │
+│  2. Data Store (trinity.txt)                     │
+│     └─ Summarization Prompt (RESTRICTIVE)        │
+│        "Réponds UNIQUEMENT depuis les sources"   │
+│     └─ Result: "Données insuffisantes"  ← FAIL   │
+│                                                  │
+│  3. Generative Fallback (PERMISSIVE)             │
+│     └─ "Tu sais tout (World Knowledge)"          │
+│     └─ Result: "Emmanuel Macron"  ← SUCCESS       │
+└──────────────────────────────────────────────────┘
+
+Multi-project failover (credit stacking):
+┌─────────┐     ┌────────────────┐
+│  route   │────▶│ GCP Project 1  │ → Agent (same config)
+│  _dialog │     ├────────────────┤
+│  .py     │────▶│ GCP Project 2  │ → Agent (same config)
+└─────────┘     └────────────────┘
 ```
 
 ## Setup
