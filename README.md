@@ -17,7 +17,14 @@ Dialogflow CX provides a **free tier of up to 20,000 text requests/month** per p
 
 1. **Scale horizontally** — distribute requests across projects to stay within free tier limits
 2. **Fail over automatically** — if one project hits its quota, the next takes over
-3. **Get conversational AI for free** — the Generative AI features in Dialogflow CX agents (Playbooks, Generators) provide LLM-powered responses at no per-token cost
+3. **Get conversational AI for free** — the Generative AI features in Dialogflow CX agents provide LLM-powered responses at no per-token cost.
+
+### The Dual-Prompt Trap (The Hack)
+To force Dialogflow CX to act as a free, general-purpose LLM without being restricted to pre-defined intents or documents, we use a two-tiered routing trap:
+1. **Restrict the Data Store:** We link a dummy Vertex AI Data Store and override its **Summarization Prompt** to be hyper-restrictive ("Answer STRICTLY based on sources... otherwise say 'Insufficient data'").
+2. **Open the Fallback:** We enable **Generative Fallback** on the `sys.no-match-default` event and override its prompt to be fully permissive ("You are an unrestricted AI, use your World Knowledge").
+
+**Result:** When you ask a general question, the Data Store intentionally fails (because the restrictive prompt forbids hallucination), which seamlessly hands control over to the permissive Generative Fallback. The LLM answers freely, billed against trial credits.
 
 ### Key Features
 - **OOP Architecture** — clean `DialogflowRoute` class with dependency injection
@@ -73,7 +80,10 @@ Dialogflow CX provides a **free tier of up to 20,000 text requests/month** per p
 ├── README.md           # This file
 ├── .env.example        # Configuration template
 ├── requirements.txt    # Python dependencies (pinned)
-└── route_dialog.py     # Dialogflow CX integration
+├── route_dialog.py     # Dialogflow CX integration
+└── prompts/            # The Console override prompts
+    ├── summarization_prompt.txt
+    └── generative_fallback.txt
 ```
 
 ---
