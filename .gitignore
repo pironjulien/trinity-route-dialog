@@ -3,3 +3,4 @@ __pycache__/
 .env
 .venv/
 *.log
+.temp_key_*.json
