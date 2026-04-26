@@ -16,8 +16,8 @@ from typing import Any, Dict, List
 
 from dotenv import load_dotenv
 from loguru import logger
-from google.cloud.dialogflowcx_v3beta1.services.sessions import SessionsClient
-from google.cloud.dialogflowcx_v3beta1.types import session
+from google.cloud.dialogflowcx_v3.services.sessions import SessionsClient
+from google.cloud.dialogflowcx_v3.types import session
 from google.oauth2 import service_account
 
 load_dotenv()
@@ -125,7 +125,7 @@ def query_with_failover(text: str, session_id: str = "default") -> str:
 
 if __name__ == "__main__":
     logger.info("Dialogflow CX Route Initialized.")
-    prompt_test = "Bonjour, comment vas-tu ?"
+    prompt_test = "Qui est le président de la France actuellement ?"
     logger.info(f"Sending: '{prompt_test}'")
 
     result = query_with_failover(prompt_test)

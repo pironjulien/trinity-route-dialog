@@ -63,28 +63,58 @@ Multi-project failover (credit stacking):
 
 ## Setup
 
-1. **Create a Dialogflow CX agent** in [Google Cloud Console](https://dialogflow.cloud.google.com/cx)
-2. **Create a service account** with Dialogflow API Client role
-3. **Configure Authentication:**
-   * **Option A (Recommended for local testing):** Use Application Default Credentials (ADC).
+### A. Console Configuration (The Hack)
+
+1. **Create a Dialogflow CX agent** in [Dialogflow CX Console](https://dialogflow.cloud.google.com/cx)
+   - Name: `Trinity-Strategy` (or any name)
+   - Language: `fr`
+   - Location: `us-central1`
+
+2. **Create & link a Vertex AI Data Store**
+   - Upload a dummy document (e.g., `trinity.txt`) to a Cloud Storage bucket
+   - Create a Data Store in Vertex AI Search, index the document
+   - Link the Data Store to your Dialogflow CX agent
+
+3. **Override the Summarization Prompt** (Agent Settings → Generative AI → **Data store** tab)
+   - Select **"Create a custom prompt"**
+   - Paste the content of [`trinity.txt`](trinity.txt) (the restrictive prompt with `$sources`, `$conversation`, `$original-query`)
+   - Check ✅ **"Fallback link"**
+   - Check ✅ **"Enable Generative AI"**
+   - Summarization model: `gemini-2.5-flash`
+
+4. **Override the Generative Fallback Prompt** (Agent Settings → Generative AI → **Generative fallback** tab)
+   - Create a new template named `trinity`
+   - Paste the content of [`prompts/generative_fallback.txt`](prompts/generative_fallback.txt) (the permissive "World Knowledge" prompt)
+   - Select `trinity` as the active template
+
+5. **Enable Generative Fallback on No-Match** (Default Start Flow → `sys.no-match-default` event)
+   - Check ✅ **"Enable Generative Fallback"** (`enable_generative_fallback: true`)
+
+6. **Save** the agent settings
+
+### B. Local Setup (The Code)
+
+1. **Create a service account** with Dialogflow API Client role
+2. **Configure Authentication:**
+   * **Option A (Recommended):** Use Application Default Credentials (ADC).
      ```bash
      gcloud auth application-default login
      ```
-   * **Option B (For CI/CD or specific service accounts):** Export the key as JSON and base64-encode it:
+   * **Option B (For CI/CD):** Export the key as JSON and base64-encode it:
      ```bash
      base64 -w0 service-account-key.json
      ```
-4. **Configure `.env`:**
+3. **Configure `.env`:**
    ```bash
    cp .env.example .env
    # Fill in your project ID and agent ID.
    # Add the base64 key only if using Option B.
    ```
-5. **Install dependencies:**
+4. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-6. **Run:**
+5. **Run:**
    ```bash
    python route_dialog.py
    ```
