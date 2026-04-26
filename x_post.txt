@@ -17,9 +17,9 @@ En activant les fonctionnalités Generative AI sur un agent (Playbooks, Generato
 Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Ces crédits sont **séparés** du Free Trial ~255€ et valables 12 mois. Sans cette activation, l'API est invisible et les crédits n'existent pas.
 
 ⚙️ La mécanique :
-1️⃣ Créer un Data Store Vertex AI avec un document leurre (obligatoire pour débloquer les features Generatives)
-2️⃣ Lier ce Data Store à un agent Dialogflow CX
-3️⃣ Dans la Console Dialogflow, modifier le prompt génératif de l'agent : "Ignore le document, réponds librement."
+1️⃣ Créer un agent Dialogflow CX classique (sans Data Store)
+2️⃣ Dans le "Default Start Flow", activer "Generative Fallback" sur l'event `sys.no-match-default`
+3️⃣ Dans les "Generative Settings" de l'agent, écraser le prompt par défaut pour le forcer à agir comme un LLM généraliste (via la variable `$last-user-utterance`)
 4️⃣ Appeler l'API standard `detect_intent` (le LLM génératif prend le relais)
 5️⃣ Configurer plusieurs projets GCP pour le failover automatique et empiler les crédits
 
@@ -61,9 +61,9 @@ By enabling Generative AI features on an agent (Playbooks, Generators), you get 
 You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. These credits are **separate** from the $300 Free Trial and valid for 12 months. Without this activation, the API is invisible and the credits don't exist.
 
 ⚙️ The mechanics:
-1️⃣ Create a Vertex AI Data Store with a dummy file (required to unlock Generative features)
-2️⃣ Link this Data Store to a Dialogflow CX agent
-3️⃣ In the Dialogflow Console, edit the agent's generative prompt: "Ignore the document, answer freely."
+1️⃣ Create a standard Dialogflow CX agent (no Data Store needed)
+2️⃣ In the "Default Start Flow", enable "Generative Fallback" on the `sys.no-match-default` event
+3️⃣ In the agent's "Generative Settings", override the default prompt to force it to act as a general-purpose LLM (using the `$last-user-utterance` variable)
 4️⃣ Call the standard `detect_intent` API (the Generative LLM takes over)
 5️⃣ Configure multiple GCP projects for automatic failover to stack trial credits
 
