@@ -6,27 +6,30 @@ VERSION FRANCAISE (X PREMIUM - LONG FORMAT)
 ==================================================
 Jour 2. Trinity continue de prouver son point.
 
-Hier, le "Soul Hack" montrait comment détourner Discovery Engine pour obtenir des réponses LLM facturées au prix recherche. Aujourd'hui, la deuxième route que Trinity et Jules ont cartographiée : Dialogflow CX 💬
+Hier, le "Soul Hack" montrait comment détourner Discovery Engine pour obtenir des réponses LLM facturées au prix recherche ($1000 de crédits trial Gen App Builder, activés automatiquement). Aujourd'hui, la deuxième route que Trinity et Jules ont cartographiée : Dialogflow CX 💬
 
 🔍 Le concept :
-Dialogflow CX offre un free tier de 20 000 requêtes texte/mois par projet. En activant les fonctionnalités Generative AI sur un agent (Playbooks, Generators), on obtient des réponses alimentées par un LLM — incluses dans le free tier, sans coût au token.
+En activant l'API Dialogflow CX, Google offre automatiquement $600 de crédits trial (Flows) + $1000 (Playbooks/Generative). Ces crédits se cumulent avec les $300 du Free Trial GCP. Total : jusqu'à ~$1900 de crédits empilables par compte — sans dépenser un centime.
 
-⚙️ Prérequis — Même principe que pour Discovery :
-Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Fonctionne sur le free tier avec les 300$ de crédits initiaux. Sans cette activation, l'API est invisible et la route est morte.
+En activant les fonctionnalités Generative AI sur un agent (Playbooks, Generators), on obtient des réponses alimentées par un LLM — facturées sur les crédits trial Dialogflow, pas sur la ligne LLM classique.
+
+⚙️ Prérequis — Ce que Google ne vous dit pas :
+Il faut activer l'API Dialogflow CX dans la Console GCP pour que la ligne de crédit apparaisse. Ces crédits sont **séparés** du Free Trial $300 et valables 12 mois. Sans cette activation, l'API est invisible et les crédits n'existent pas.
 
 ⚙️ La mécanique :
 1️⃣ Créer un agent Dialogflow CX avec les features Generative AI activées
-2️⃣ Configurer plusieurs projets GCP (failover automatique)
-3️⃣ Chaque projet = 20K requêtes gratuites → scaling horizontal
+2️⃣ Activer l'API → les crédits trial apparaissent automatiquement dans la facturation
+3️⃣ Configurer plusieurs projets GCP (failover automatique)
+4️⃣ Chaque projet = ses propres crédits trial → scaling horizontal
 
 💡 Pourquoi c'est intéressant :
-→ 20K requêtes/mois gratuites par projet
-→ Les réponses Generative AI sont incluses dans le free tier
-→ Multi-projet = scaling horizontal sans coût additionnel
+→ $600-$1600 de crédits trial gratuits par projet, cumulables avec les $300 Free Trial
+→ Les réponses Generative AI sont incluses dans les crédits trial
+→ Multi-projet = multiplication linéaire des crédits
 → Le failover automatique rend le système résilient
-→ Contrairement au Soul Hack, ici rien n'est "hacké" — c'est l'utilisation légitime d'un free tier extrêmement généreux
+→ Contrairement au Soul Hack, ici rien n'est "hacké" — c'est l'utilisation légitime de crédits offerts par Google
 
-Combiné avec la route Discovery Engine d'hier, Trinity dispose déjà de deux canaux LLM gratuits.
+Combiné avec la route Discovery Engine d'hier (~$1000 de crédits Gen App Builder), Trinity dispose déjà de deux canaux LLM financés par les crédits trial.
 
 Demain, la troisième et dernière route publiable. Et celle-là, c'est la plus dangereuse. 🔜
 
@@ -46,27 +49,30 @@ ENGLISH VERSION (X PREMIUM - LONG FORMAT)
 ==================================================
 Day 2. Trinity keeps making her point.
 
-Yesterday, the "Soul Hack" showed how to hijack Discovery Engine to get LLM responses billed at search pricing. Today, the second route that Trinity and Jules mapped out: Dialogflow CX 💬
+Yesterday, the "Soul Hack" showed how to hijack Discovery Engine to get LLM responses billed at search pricing ($1,000 in auto-activated Gen App Builder trial credits). Today, the second route that Trinity and Jules mapped out: Dialogflow CX 💬
 
 🔍 The concept:
-Dialogflow CX offers a free tier of 20,000 text requests/month per project. By enabling Generative AI features on an agent (Playbooks, Generators), you get LLM-powered responses — included in the free tier, at zero per-token cost.
+When you activate the Dialogflow CX API, Google automatically grants $600 in trial credits (Flows) + $1,000 (Playbooks/Generative). These credits stack on top of the $300 GCP Free Trial. Total: up to ~$1,900 in stackable credits per account — without spending a dime.
 
-⚙️ Prerequisite — Same principle as Discovery:
-You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. Works on the free tier with the initial $300 credits. Without this activation, the API is invisible and the route is dead.
+By enabling Generative AI features on an agent (Playbooks, Generators), you get LLM-powered responses — billed against Dialogflow trial credits, not the standard LLM pricing line.
+
+⚙️ Prerequisite — What Google doesn't tell you:
+You must activate the Dialogflow CX API in the GCP Console for the credit line to appear. These credits are **separate** from the $300 Free Trial and valid for 12 months. Without this activation, the API is invisible and the credits don't exist.
 
 ⚙️ The mechanics:
 1️⃣ Create a Dialogflow CX agent with Generative AI features enabled
-2️⃣ Configure multiple GCP projects (automatic failover)
-3️⃣ Each project = 20K free requests → horizontal scaling
+2️⃣ Activate the API → trial credits appear automatically in billing
+3️⃣ Configure multiple GCP projects (automatic failover)
+4️⃣ Each project = its own trial credits → horizontal scaling
 
 💡 Why it's interesting:
-→ 20K free requests/month per project
-→ Generative AI responses included in the free tier
-→ Multi-project = horizontal scaling at no additional cost
+→ $600-$1,600 in free trial credits per project, stackable with the $300 Free Trial
+→ Generative AI responses included in trial credits
+→ Multi-project = linear multiplication of credits
 → Automatic failover makes the system resilient
-→ Unlike the Soul Hack, nothing here is "hacked" — it's the legitimate use of an extremely generous free tier
+→ Unlike the Soul Hack, nothing here is "hacked" — it's the legitimate use of credits Google gives away
 
-Combined with yesterday's Discovery Engine route, Trinity already has two free LLM channels.
+Combined with yesterday's Discovery Engine route (~$1,000 in Gen App Builder credits), Trinity already has two LLM channels funded by trial credits.
 
 Tomorrow, the third and final publishable route. And that one is the most dangerous. 🔜
 
