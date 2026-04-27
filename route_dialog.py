@@ -12,7 +12,7 @@ and Google Cloud Application Default Credentials (ADC).
 import os
 import json
 import base64
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from dotenv import load_dotenv
 from loguru import logger
