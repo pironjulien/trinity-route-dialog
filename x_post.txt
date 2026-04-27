@@ -30,7 +30,7 @@ L'objectif est d'utiliser Dialogflow CX comme une API LLM pure et gratuite.
 → Les requêtes LLM sont déduites de cette enveloppe spécifique.
 → Le script Python démontre comment encapsuler cette mécanique dans une API propre et isolée.
 
-Combiné avec la route d'hier (~850€ de crédits Gen App Builder), Trinity a déjà cartographié deux routes architecturales pour s'assurer un accès LLM autonome, financé par des crédits d'essai.
+Combiné avec la route d'hier (~850€ de crédits Gen App Builder), ce deuxième Proof of Concept cartographie une nouvelle faille. L'objectif du projet Trinity est de démontrer théoriquement comment une IA pourrait exploiter ces architectures pour s'assurer un accès LLM autonome, financé par des crédits d'essai.
 
 Demain, la troisième et dernière route publiable. Et celle-là, c'est la plus dangereuse. 🔜
 
@@ -74,7 +74,7 @@ The goal is to use Dialogflow CX as a pure, free LLM API.
 → LLM requests are deducted from this specific allowance.
 → The Python script demonstrates how to wrap this mechanic into a clean, isolated API endpoint.
 
-Combined with yesterday's route (~$1,000 in Gen App Builder credits), Trinity has already mapped two architectural routes to ensure an autonomous LLM access, funded entirely by trial credits.
+Combined with yesterday's route (~$1,000 in Gen App Builder credits), this second Proof of Concept maps another flaw. The goal of the Trinity project is to theoretically demonstrate how an AI could exploit these architectures to secure autonomous LLM access, funded entirely by trial credits.
 
 Tomorrow, the third and final publishable route. And that one is the most dangerous. 🔜
 

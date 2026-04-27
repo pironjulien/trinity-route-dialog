@@ -1,6 +1,6 @@
 # ⚠️ DISCLAIMER: Educational Proof of Concept
 
-This repository contains a Proof of Concept (PoC) demonstrating how Dialogflow CX's free tier can be leveraged as a conversational AI route with multi-project failover.
+This repository contains a Proof of Concept (PoC) demonstrating how Dialogflow CX's free tier can be leveraged as a conversational AI route.
 
 It was created **strictly for educational purposes** as part of a theoretical research project on autonomous AI economics (Project Trinity).
 
