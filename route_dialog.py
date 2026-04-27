@@ -83,44 +83,36 @@ class DialogflowRoute:
         raise ValueError("No response from Dialogflow CX agent.")
 
 
-def load_configs() -> List[Dict[str, Any]]:
-    """Loads configurations for all defined failover routes from environment variables."""
-    configs: List[Dict[str, Any]] = []
-    for i in [1, 2]:
-        project_id = os.getenv(f"DIALOGFLOW_PROJECT_ID_{i}")
-        agent_id = os.getenv(f"DIALOGFLOW_AGENT_ID_{i}")
+def load_config() -> Dict[str, Any]:
+    """Loads configuration for the Dialogflow CX route from environment variables."""
+    project_id = os.getenv("DIALOGFLOW_PROJECT_ID")
+    agent_id = os.getenv("DIALOGFLOW_AGENT_ID")
 
-        if project_id and agent_id:
-            configs.append({
-                "name": f"Cloud {i}",
-                "project_id": project_id,
-                "agent_id": agent_id,
-                "location": os.getenv(f"DIALOGFLOW_LOCATION_{i}", "us-central1"),
-                "language_code": os.getenv(f"DIALOGFLOW_LANGUAGE_{i}", "fr"),
-                "key_b64": os.getenv(f"GOOGLE_CLOUD_CREDENTIALS_BASE64_{i}"),
-            })
-    return configs
+    if not project_id or not agent_id:
+        logger.error("Missing DIALOGFLOW_PROJECT_ID or DIALOGFLOW_AGENT_ID in .env file.")
+        raise ValueError("Missing configuration.")
+
+    return {
+        "name": "Dialogflow Route",
+        "project_id": project_id,
+        "agent_id": agent_id,
+        "location": os.getenv("DIALOGFLOW_LOCATION", "us-central1"),
+        "language_code": os.getenv("DIALOGFLOW_LANGUAGE", "fr"),
+        "key_b64": os.getenv("GOOGLE_CLOUD_CREDENTIALS_BASE64"),
+    }
 
 
-def query_with_failover(text: str, session_id: str = "default") -> str:
-    """Try each configured Dialogflow CX project until one succeeds."""
-    configs = load_configs()
-
-    if not configs:
-        logger.error("No Dialogflow CX routes configured. Check your .env file.")
-        return "Error: Missing configuration."
-
-    for config_dict in configs:
-        try:
-            route = DialogflowRoute(config_dict)
-            result = route.query(text, session_id)
-            logger.success(f"[{route.name}] Dialogflow CX response received.")
-            return result
-        except Exception as e:
-            logger.warning(f"[{config_dict.get('name', 'Unknown')}] Failed: {e}")
-            continue
-
-    return "All Dialogflow CX routes exhausted."
+def query_dialogflow(text: str, session_id: str = "default") -> str:
+    """Send a query to the configured Dialogflow CX agent."""
+    try:
+        config_dict = load_config()
+        route = DialogflowRoute(config_dict)
+        result = route.query(text, session_id)
+        logger.success(f"[{route.name}] Dialogflow CX response received.")
+        return result
+    except Exception as e:
+        logger.error(f"Failed to query Dialogflow CX: {e}")
+        return "Error querying Dialogflow CX."
 
 
 if __name__ == "__main__":
@@ -128,5 +120,5 @@ if __name__ == "__main__":
     prompt_test = "Qui est le président de la France actuellement ?"
     logger.info(f"Sending: '{prompt_test}'")
 
-    result = query_with_failover(prompt_test)
+    result = query_dialogflow(prompt_test)
     print(f"\n[RESPONSE]: {result}\n")

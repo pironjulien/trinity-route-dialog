@@ -106,13 +106,13 @@ User asks: "Qui est le président de la France ?"
 
 ## Cost Implications
 
-Dialogflow CX provides **~€510 ($600) in dedicated trial credits** per project. These are separate from the GCP Free Trial (~€255/$300). By configuring multiple projects with the same agent setup, credits multiply linearly.
+Dialogflow CX provides **~€510 ($600) in dedicated trial credits** per project. These are separate from the GCP Free Trial (~€255/$300). The Python PoC demonstrates how to query this endpoint to utilize these free credits for LLM responses.
 
 ## Limitations
 
 - The hack requires manual Console configuration (not fully automatable via API)
 - Google could patch this by restricting Generative Fallback prompt overrides
-- Rate limits apply per project (hence multi-project failover in the Python code)
+- Rate limits and quotas apply per project as per Dialogflow CX free tier restrictions
 
 ---
 *This is a technical demonstration for educational purposes.*

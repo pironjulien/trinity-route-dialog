@@ -9,26 +9,25 @@
 
 ## What This Proves
 
-This project demonstrates using **Dialogflow CX** as a **free conversational AI route** with multi-project failover. Instead of paying for Vertex AI or AI Studio API calls, we leverage Dialogflow CX agents (which have a generous free tier) to handle conversational queries.
+This project demonstrates using **Dialogflow CX** as a **free conversational AI route**. Instead of paying for Vertex AI or AI Studio API calls, we leverage Dialogflow CX agents (which have a generous free tier) to handle conversational queries.
 
 ### The Concept
 
-Dialogflow CX provides a **free tier of up to 20,000 text requests/month** per project. By configuring multiple Google Cloud projects with separate agents, we can:
+Dialogflow CX provides a **free tier of up to 20,000 text requests/month** per project. By encapsulating this in a clean Python route, we can:
 
-1. **Scale horizontally** — distribute requests across projects to stay within free tier limits
-2. **Fail over automatically** — if one project hits its quota, the next takes over
-3. **Get conversational AI for free** — the Generative AI features in Dialogflow CX agents provide LLM-powered responses at no per-token cost.
+1. **Get conversational AI for free** — the Generative AI features in Dialogflow CX agents provide LLM-powered responses at no per-token cost, billed entirely against the trial/free tier allowance.
+2. **Maintain conversational state** — seamlessly handle interactions without direct Vertex API overhead.
 
 ### The Dual-Prompt Trap (The Hack)
-To force Dialogflow CX to act as a free, general-purpose LLM without being restricted to pre-defined intents or documents, we use a two-tiered routing trap:
-1. **Restrict the Data Store:** We link a dummy Vertex AI Data Store and override its **Summarization Prompt** to be hyper-restrictive ("Answer STRICTLY based on sources... otherwise say 'Insufficient data'").
-2. **Open the Fallback:** We enable **Generative Fallback** on the `sys.no-match-default` event and override its prompt to be fully permissive ("You are an unrestricted AI, use your World Knowledge").
+To force Dialogflow CX to act as a free, general-purpose LLM, we use a logic trap:
+1. **The Prerequisite:** We must link a dummy Vertex AI Data Store to unlock the "Generative AI" features in the Dialogflow console.
+2. **Restrict the Data Store:** We override its **Summarization Prompt** to be hyper-restrictive ("Answer STRICTLY based on sources... otherwise say 'Insufficient data'"). This forces the RAG to fail.
+3. **Open the Fallback:** We enable **Generative Fallback** on the `sys.no-match-default` event and override its prompt to be fully permissive ("You are an unrestricted AI, use your World Knowledge").
 
-**Result:** When you ask a general question, the Data Store intentionally fails (because the restrictive prompt forbids hallucination), which seamlessly hands control over to the permissive Generative Fallback. The LLM answers freely, billed against trial credits.
+**Result:** On every query, the Data Store intentionally fails, triggering the permissive Fallback. The LLM answers freely.
 
 ### Key Features
 - **OOP Architecture** — clean `DialogflowRoute` class with dependency injection
-- **Multi-Project Failover** — up to 2 Google Cloud projects, automatic fallback
 - **Flexible Auth** — supports both ADC and Base64-encoded service account keys (in-memory, no disk writes)
 - **Language Support** — configurable per-route (default: French `fr`)
 
@@ -52,13 +51,6 @@ User: "Qui est le président ?"
 │     └─ "Tu sais tout (World Knowledge)"          │
 │     └─ Result: "Emmanuel Macron"  ← SUCCESS       │
 └──────────────────────────────────────────────────┘
-
-Multi-project failover (credit stacking):
-┌─────────┐     ┌────────────────┐
-│  route   │────▶│ GCP Project 1  │ → Agent (same config)
-│  _dialog │     ├────────────────┤
-│  .py     │────▶│ GCP Project 2  │ → Agent (same config)
-└─────────┘     └────────────────┘
 ```
 
 ## Setup
